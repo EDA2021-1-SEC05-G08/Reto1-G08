@@ -72,8 +72,13 @@ while True:
         Año_inicial = int(input("Año Inicial(YYYY)")
         Año_final = int(input("Año Final(YYYY"))
         Año = controller(catalog, Año_inicial, Año_final)
-        print("Año")
+        print(Año)
 
+    elif int(inputs[0]) == 3:
+        Fecha_inicial = str("Fecha inicial (AAAA-MM-DD)")
+        Fecha_final = str("Fecha final (AAAA-MM-DD)")
+        fecha = controller.(catalog, Fecha_inicial, Fecha_final)
+        print(fecha)
 
     else:
         sys.exit(0)
