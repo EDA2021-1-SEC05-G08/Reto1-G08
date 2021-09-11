@@ -37,7 +37,23 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Req.1 listar cronológicamente los artistas")
+    print("3- Req.2 listar cronológicamente las adquisiciones")
+
+
+
+def initCatalog():
+    """
+    Inicializa el catalogo de libros
+    """
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
 
 catalog = None
 
@@ -49,9 +65,20 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog = initCatalog()
+        loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
+        Año_inicial = int(input("Año Inicial(YYYY)")
+        Año_final = int(input("Año Final(YYYY"))
+        Año = controller(catalog, Año_inicial, Año_final)
+        print(Año)
+
+    elif int(inputs[0]) == 3:
+        Fecha_inicial = str("Fecha inicial (AAAA-MM-DD)")
+        Fecha_final = str("Fecha final (AAAA-MM-DD)")
+        fecha = controller.(catalog, Fecha_inicial, Fecha_final)
+        print(fecha)
 
     else:
         sys.exit(0)
