@@ -37,101 +37,48 @@ los mismos.
 
 # Construccion de modelos
 
-def newCatalog_Artists():
+def newCatalog():
+    catalog = {
+        'Artists': None,
+        'ArtWorks': None
+    }
+
+    catalog['Artist'] = lt.newList('SINGLE_LINKED')
+    catalog['ArtWorks'] = lt.newList('SINGLE_LINKED')
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
     todos los libros, adicionalmente, crea una lista vacia para los autores,
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
-    catalog_Artist = {'ConstituentID': None,
-               'DisplayName': None,
-               'ArtistBio': None,
-               'Nationality': None,
-               "Gender": None,
-               "BeginDate": None,
-               "EndDate": None,
-               "WikiQID": None,
-               "ULAN": None}
-
-    
-
-    catalog_Artist['ConstituentID'] = lt.newList()
-    catalog_Artist['DisplayName'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['ArtistBio'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['Nationality'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['Gender'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['BeginDate'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['EndDate'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['WikiQID'] = lt.newList('SINGLE_LINKED')
-    catalog_Artist['ULAN'] = lt.newList('SINGLE_LINKED')
-
-    return catalog_Artist
-
-def newCatalog_Artworks():
-    """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
-    una lista vacia para los generos y una lista vacia para la asociación
-    generos y libros. Retorna el catalogo inicializado.
-    """
-    catalog_Artworks = {'ObjectID': None,
-               'Title': None,
-               'ConstituentID': None,
-               'Date': None,
-               "Medium": None,
-               "Dimensions": None,
-               "CreditLine": None,
-               "AccesionNumber": None,
-               "Classification": None,
-               "Department": None,
-               "DateAcquired": None,
-               "Catalogued": None,
-               "URL": None,
-               "Circumference": None, 
-               "Depth": None,
-               "Diameter": None,
-               "Classification": None,
-               "Height": None,
-               "Length": None,
-               "Weight": None,
-               "Width": None,
-               "SeatHeight": None,
-               "Duration": None}
-
-    
-
-    catalog_Artworks["ObjectID"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Title"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["ConstituentID"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Date"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Medium"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Dimensions"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["CreditLine"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["AccesionNumber"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Classification"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Department"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["DataAcquiered"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Catalogued"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["URL"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Circumference"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Depth"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Diameter"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Classification"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Height"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Length"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Weight"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Width"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["SeatHeight"] = lt.newList('SINGLE_LINKED')
-    catalog_Artworks["Duration"] = lt.newList('SINGLE_LINKED')
-
-    return catalog_Artworks
-
-print(newCatalog_Artworks())
-
+               
 
 # Funciones para agregar informacion al catalogo
 
+def addArtists(catalog, Artists):
+    # Se adiciona el libro a la lista de libros
+    lt.addLast(catalog['Artists'], Artists)
+    # Se obtienen los autores del libro
+    Artist = Artists['Display Name'].split(",")
+    # Cada autor, se crea en la lista de libros del catalogo, y se
+    # crea un libro en la lista de dicho autor (apuntador al libro)
+    for author in Artist:
+        addArtist(catalog, author.strip(), Artists)
+
+def addArtist(catalog, DisplayName, Artists):
+
+    Artist = catalog['Display Name']
+    postArtist = lt.isPresent(Artist, DisplayName)
+    if postArtist > 0:
+        Artista = lt.getElement(Artist, postArtist)
+    else:
+        Artista = newArtist(DisplayName)
+        lt.addLast(Artist, Artista)
+    lt.addLast(Artista['Artist'], catalog)
+
+def AddArtWorks(catalog, Artwork):
+    Work = newArtWork(Artwork['ObjectID'],Artwork['Title'],Artwork['ConstituentID'],Artwork['Date'],Artwork['Medium'],Artwork['Dimensions'],Artwork['CreditLine'],Artwork['AccesionNumber'],Artwork['Classification'],Artwork['Department'],Artwork['DateAcquired'],Artwork['Catalogued'],Artwork['URL'],Artwork['Circumference (cm)'],Artwork['Depth (cm)'],Artwork['Diameter (cm)'],Artwork['Height (cm)'],Artwork['Length (cm)'],Artwork['Weight (kg)'],Artwork['Width (cm)'],Artwork['Seat Height (cm)'],Artwork['Duration (sec.)'])
+    lt.addLast(catalog['ArtWorks'], Work)
 # Funciones para creacion de datos
 
 # Funciones de consulta
