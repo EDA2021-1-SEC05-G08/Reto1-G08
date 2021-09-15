@@ -53,7 +53,7 @@ def loadData(catalog):
     """
     Carga los libros en la estructura de datos
     """
-    controller.loadData(catalog)
+    return controller.LoadData(catalog)
 
 catalog = None
 
@@ -69,16 +69,16 @@ while True:
         loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        Año_inicial = int(input("Año Inicial(YYYY)")
-        Año_final = int(input("Año Final(YYYY"))
+        Año_inicial = int(input("Año Inicial(YYYY)"))
+        Año_final = int(input("Año Final(YYYY)"))
         Año = controller(catalog, Año_inicial, Año_final)
         print(Año)
 
     elif int(inputs[0]) == 3:
         Fecha_inicial = str("Fecha inicial (AAAA-MM-DD)")
         Fecha_final = str("Fecha final (AAAA-MM-DD)")
-        fecha = controller.(catalog, Fecha_inicial, Fecha_final)
-        print(fecha)
+        #fecha = controller.(catalog, Fecha_inicial, Fecha_final)
+        print(None)
 
     else:
         sys.exit(0)

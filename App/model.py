@@ -43,27 +43,39 @@ def newCatalog():
         'ArtWorks': None
     }
 
-    catalog['Artist'] = lt.newList('SINGLE_LINKED')
+    catalog['Artists'] = lt.newList('SINGLE_LINKED')
     catalog['ArtWorks'] = lt.newList('SINGLE_LINKED')
     """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
-    una lista vacia para los generos y una lista vacia para la asociación
-    generos y libros. Retorna el catalogo inicializado.
-    """
-               
-
+    Inicializa el catálogo de obras de arte. Crea una lista vacia para guardar
+    todas las obras, adicionalmente, crea una lista vacia para los artistas.
+    Retorna el catalogo inicializado.
+    """        
 # Funciones para agregar informacion al catalogo
 
-def addArtists(catalog, Artists):
-    # Se adiciona el libro a la lista de libros
-    lt.addLast(catalog['Artists'], Artists)
-    # Se obtienen los autores del libro
-    Artist = Artists['Display Name'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
-    for author in Artist:
-        addArtist(catalog, author.strip(), Artists)
+def addArtWork(catalog, ArtWork):
+    # Se adiciona la obra a la lista de obras
+    lt.addLast(catalog['ArtWorks'], ArtWork)
+    # Se obtienen los autores de la obra
+    artists = ArtWork['Artists'].split(",")
+    # Cada artista, se crea en la lista de obras de arte del catalogo, y se
+    # crea un libro en la lista de dicho artista
+    for artist in artists:
+        addArtWorkArtist(catalog, artist.strip(), ArtWork)
+
+def addArtWorkArtist(catalog, artistname, ArtWork):
+    """
+    Adiciona un artista a lista de artistas, la cual guarda referencias
+    a las obras de arte de dicho artista
+    """
+    artists = catalog['Artist']
+    posartist = lt.isPresent(artists, artistname)
+    if posartist > 0:
+        artist = lt.getElement(artists, posartist)
+    else:
+        artist = newArtist(artistname)
+        lt.addLast(artists, artist)
+    lt.addLast(artist['ArtWorks'], ArtWork)
+
 
 def addArtist(catalog, DisplayName, Artists):
 
@@ -79,7 +91,46 @@ def addArtist(catalog, DisplayName, Artists):
 def AddArtWorks(catalog, Artwork):
     Work = newArtWork(Artwork['ObjectID'],Artwork['Title'],Artwork['ConstituentID'],Artwork['Date'],Artwork['Medium'],Artwork['Dimensions'],Artwork['CreditLine'],Artwork['AccesionNumber'],Artwork['Classification'],Artwork['Department'],Artwork['DateAcquired'],Artwork['Catalogued'],Artwork['URL'],Artwork['Circumference (cm)'],Artwork['Depth (cm)'],Artwork['Diameter (cm)'],Artwork['Height (cm)'],Artwork['Length (cm)'],Artwork['Weight (kg)'],Artwork['Width (cm)'],Artwork['Seat Height (cm)'],Artwork['Duration (sec.)'])
     lt.addLast(catalog['ArtWorks'], Work)
+
+
 # Funciones para creacion de datos
+
+def newArtist(name):
+    """
+    Crea una nueva estructura para modelar las obras de
+    un artista
+    """
+
+    artist = {"name": "", "ArtWorks": None}
+    artist["name"] = name
+    artist["ArtWorks"] = lt.newList("ARRAY_LIST")
+    return artist
+
+def newArtWork(ObjectID, Title, ConstituentID, Date, Medium, Dimensions, CreditLine, AccesionNumber, Classification, Department, DateAcquired, Catalogued, URL, Circumference, Depth, Diameter, Height, Length, Weight, Width, SeatHeight, Duration):
+
+    ArtWork = {"ObjectID": "", "Title": "", "ConstituentID": "", "Date": "", "Medium": "", "Dimensions": "", "CreditLine": "", "AccesionNumber": "", "Classification": "", "Department": "", "DateAcquired": "", "Catalogued": "", "URL": "", "Circumference": "", "Depth": "", "Diameter": "", "Height": "", "Length": "", "Weight": "", "Width": "", "SeatHeight": "", "Duration": ""}
+    ArtWork["ObjectID"] = ObjectID
+    ArtWork["Title"] = Title
+    ArtWork["ConstituentID"] = ConstituentID
+    ArtWork["Date"] = Date
+    ArtWork["Medium"] = Medium
+    ArtWork["Dimensions"] = Dimensions
+    ArtWork["CreditLine"] = CreditLine
+    ArtWork["AccesionNumber"] = AccesionNumber
+    ArtWork["Classification"] = Classification
+    ArtWork["Department"] = Department
+    ArtWork["DateAcquired"] = DateAcquired
+    ArtWork["Catalogued"] = Catalogued
+    ArtWork["URL"] = URL
+    ArtWork["Circumference"] = Circumference
+    ArtWork["Depth"] = Depth
+    ArtWork["Diameter"] = Diameter
+    ArtWork["Height"] = Height
+    ArtWork["Length"] = Length
+    ArtWork["Weight"] = Weight
+    ArtWork["Width"] = Width
+    ArtWork["SeatHeight"] = SeatHeight
+    ArtWork["Duration"] = Duration
 
 # Funciones de consulta
 
