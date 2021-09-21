@@ -69,16 +69,26 @@ while True:
         loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        Año_inicial = int(input("Año Inicial(YYYY)"))
-        Año_final = int(input("Año Final(YYYY)"))
-        Año = controller(catalog, Año_inicial, Año_final)
+        Año_inicial = int(input("Año Inicial(YYYY)" ))
+        Año_final = int(input("Año Final(YYYY)" ))
+        Año = controller.req1(catalog, Año_inicial, Año_final)
         print(Año)
 
     elif int(inputs[0]) == 3:
-        Fecha_inicial = str("Fecha inicial (AAAA-MM-DD)")
-        Fecha_final = str("Fecha final (AAAA-MM-DD)")
-        #fecha = controller.(catalog, Fecha_inicial, Fecha_final)
-        print(None)
+        Fecha_inicial = str(input("Fecha inicial (AAAA-MM-DD): "))
+        Fecha_final = str(input("Fecha final (AAAA-MM-DD):"))
+        fecha = controller.req2(catalog, Fecha_inicial, Fecha_final)
+        print(fecha)
+
+    elif int(inputs[0]) == 4:
+        Artista_Nombre = str(input("Nombre de artista: "))
+        info = controller.req3(catalog, Artista_Nombre)
+        print(info)
+    
+    elif int(inputs[0]) == 5:
+        Obra_Museo = str(input("Obra del museo: "))
+        info = controller.req4(catalog, Obra_Museo)
+        print(info)
 
     else:
         sys.exit(0)

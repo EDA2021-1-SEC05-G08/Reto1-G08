@@ -58,3 +58,19 @@ def LoadArtWorks(catalog):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+def req1 (catalog, Año_inicial, Año_final):
+    artist = model.requ1(catalog, Año_inicial, Año_final)
+    return artist
+
+def req2 (catalog, Fecha_inicial, Fecha_final):
+    adquisi = model.requ2(catalog, Fecha_inicial, Fecha_final)
+    return adquisi
+
+def req3 (catalog, Artista_Nombre):
+    info_Art = model.requ3(catalog, Artista_Nombre)
+    return info_Art
+
+def req4 (catalog, Obra_Museo):
+    info_Museo = model.requ4(catalog, Obra_Museo)
+    return info_Museo

@@ -134,6 +134,46 @@ def newArtWork(ObjectID, Title, ConstituentID, Date, Medium, Dimensions, CreditL
 
 # Funciones de consulta
 
+def requ1(catalog, Año_inicial, Año_final):
+    artist = {}
+    suma = 0
+    catalog["Artists"]["BeginDate"] = int(catalog["Artists"]["BeginDate"])
+    catalog["Artists"]["EndDate"] = int(catalog["Artists"]["EndDate"])
+    for elem in catalog:
+        if Año_inicial >= elem["BeginDate"] and Año_final <= elem["EndDate"]:
+            artist["Nombre"] = elem["DisplayName"] 
+            artist["Año de inicio"] = elem["BeginDate"]
+            artist["Año final"] = elem["EndDate"]
+            artist["Nacionalidad"] = elem["Nationality"]
+            artist["Genero"] = elem["Gender"]
+            suma += 1
+    total = str("Total de artistas", suma)
+    return (artist, total)
+
+def requ2(catalog, Fecha_inicial, Fecha_final):
+    adquisi={}
+    suma = 0
+    catalog["ArtWorks"]["DateAcquired"]= str(catalog["ArtWorks"]["DateAcquired"])
+    for elem in catalog["ArtWorks"]:
+        if elem["DateAcquired"] >= Fecha_inicial and elem["DateAcquired"] <= Fecha_final:
+            adquisi["Titulo"] = elem["Title"]
+            adquisi["Fecha"] = elem["Date"]
+            adquisi["Medio"] = elem["Classification"]
+            adquisi["Dimensiones"] = elem["Dimensions"]
+            if elem["CreditLine"] == "Purchase":
+                suma += 1
+    adquisi["Total"] = suma
+    return adquisi
+
+def requ3(catalog, Artista):
+    Artist = {}
+    sumaObras = 0
+    sumaTecnicas = 0
+    for elem in catalog["ArtWorks"]:
+        
+
+def reque4(catalog, )
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
