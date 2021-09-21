@@ -46,13 +46,13 @@ def LoadArtists(catalog):
     Artistsfile = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
     input_file = csv.DictReader(open(Artistsfile, encoding='utf-8'))
     for Artist in input_file:
-        model.addBook(catalog, Artist)
+        model.addArtist(catalog, Artist)
 
 def LoadArtWorks(catalog):
     ArtWorksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(ArtWorksfile, encoding='utf-8'))
     for ArtWork in input_file:
-        model.addBook(catalog, ArtWork)
+        model.addArtWork(catalog, ArtWork)
 
 
 # Funciones de ordenamiento

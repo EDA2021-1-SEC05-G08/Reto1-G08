@@ -25,6 +25,7 @@
  """
 
 
+from sys import call_tracing
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -43,24 +44,21 @@ def newCatalog():
         'ArtWorks': None
     }
 
-    catalog['Artists'] = lt.newList('SINGLE_LINKED')
-    catalog['ArtWorks'] = lt.newList('SINGLE_LINKED')
+    catalog['Artists'] = lt.newList('ARRAY_LIST')
+    catalog['ArtWorks'] = lt.newList('ARRAY_LIST')
     """
     Inicializa el catálogo de obras de arte. Crea una lista vacia para guardar
     todas las obras, adicionalmente, crea una lista vacia para los artistas.
     Retorna el catalogo inicializado.
     """        
+    return catalog
 # Funciones para agregar informacion al catalogo
 
 def addArtWork(catalog, ArtWork):
     # Se adiciona la obra a la lista de obras
     lt.addLast(catalog['ArtWorks'], ArtWork)
     # Se obtienen los autores de la obra
-    artists = ArtWork['Artists'].split(",")
-    # Cada artista, se crea en la lista de obras de arte del catalogo, y se
-    # crea un libro en la lista de dicho artista
-    for artist in artists:
-        addArtWorkArtist(catalog, artist.strip(), ArtWork)
+
 
 def addArtWorkArtist(catalog, artistname, ArtWork):
     """
@@ -77,16 +75,9 @@ def addArtWorkArtist(catalog, artistname, ArtWork):
     lt.addLast(artist['ArtWorks'], ArtWork)
 
 
-def addArtist(catalog, DisplayName, Artists):
+def addArtist(catalog, Artista):
+    lt.addLast(catalog["Artists"], Artista)
 
-    Artist = catalog['Display Name']
-    postArtist = lt.isPresent(Artist, DisplayName)
-    if postArtist > 0:
-        Artista = lt.getElement(Artist, postArtist)
-    else:
-        Artista = newArtist(DisplayName)
-        lt.addLast(Artist, Artista)
-    lt.addLast(Artista['Artist'], catalog)
 
 def AddArtWorks(catalog, Artwork):
     Work = newArtWork(Artwork['ObjectID'],Artwork['Title'],Artwork['ConstituentID'],Artwork['Date'],Artwork['Medium'],Artwork['Dimensions'],Artwork['CreditLine'],Artwork['AccesionNumber'],Artwork['Classification'],Artwork['Department'],Artwork['DateAcquired'],Artwork['Catalogued'],Artwork['URL'],Artwork['Circumference (cm)'],Artwork['Depth (cm)'],Artwork['Diameter (cm)'],Artwork['Height (cm)'],Artwork['Length (cm)'],Artwork['Weight (kg)'],Artwork['Width (cm)'],Artwork['Seat Height (cm)'],Artwork['Duration (sec.)'])
@@ -133,7 +124,6 @@ def newArtWork(ObjectID, Title, ConstituentID, Date, Medium, Dimensions, CreditL
     ArtWork["Duration"] = Duration
 
 # Funciones de consulta
-
 def requ1(catalog, Año_inicial, Año_final):
     artist = {}
     suma = 0
@@ -165,15 +155,11 @@ def requ2(catalog, Fecha_inicial, Fecha_final):
     adquisi["Total"] = suma
     return adquisi
 
-def requ3(catalog, Artista):
-    Artist = {}
-    sumaObras = 0
-    sumaTecnicas = 0
-    for elem in catalog["ArtWorks"]:
+#def requ3(catalog, Artista):
+   # Artist = {}
+   # sumaObras = 0
+   # sumaTecnicas = 0
+   # for elem in catalog["ArtWorks"]:
         
 
-def reque4(catalog, )
-
-# Funciones utilizadas para comparar elementos dentro de una lista
-
-# Funciones de ordenamiento
+# def reque4(catalog, )
