@@ -67,6 +67,9 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
+        print(lt.size(catalog["Artists"]))
+        print(lt.size(catalog["ArtWorks"])) 
+        print(catalog["ArtWorks"])
 
     elif int(inputs[0]) == 2:
         Año_inicial = int(input("Año Inicial(YYYY)" ))
