@@ -39,6 +39,8 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- Req.1 listar cronológicamente los artistas")
     print("3- Req.2 listar cronológicamente las adquisiciones")
+    print("4- Req.3 listar cronológicamente las adquisiciones")
+    print("5- Req.4 listar cronológicamente las adquisiciones")
 
 
 

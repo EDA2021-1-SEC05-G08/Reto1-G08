@@ -35,6 +35,24 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+#Funciones Adicionales
+
+def convertirFecha(fecha):
+    fecha = fecha.split("-")
+    año = fecha[0]
+    mes = fecha[1]
+    dia = fecha[2]
+    if dia[0] == "0":
+        dia = dia[1:]
+    if mes[0] == "0":
+        mes = mes[1:]
+    fecha = datetime.datetime(int(año), int(mes), int(dia))
+    return fecha
+def quitarcorcheas(constitude):
+    constitude = constitude.split("[")
+    constitude = constitude.split("]")
+    constitude = int(constitude)
+    return constitude
 
 # Construccion de modelos
 
@@ -124,42 +142,76 @@ def newArtWork(ObjectID, Title, ConstituentID, Date, Medium, Dimensions, CreditL
     ArtWork["Duration"] = Duration
 
 # Funciones de consulta
+def comparteYear(author1, author2):
+    return (author1["BeginDate"] < author2["BeginDate"])
+
+def compareDate(artwork1, artwork2):
+    return(convertirFecha(artwork1["DateAcquired"]) < convertirFecha(artwork2["DateAcquired"]))
+
+def comparateConstituteID(constitudeID1, constitudeID2):
+    return(quitarcorcheas(constitudeID1["ConstituentID"]) < quitarcorcheas(constitudeID2["ConstituentID"]))
+
+
+# Funciones de consulta
 def requ1(catalog, Año_inicial, Año_final):
-    artist = {}
-    suma = 0
-    catalog["Artists"]["BeginDate"] = int(catalog["Artists"]["BeginDate"])
-    catalog["Artists"]["EndDate"] = int(catalog["Artists"]["EndDate"])
-    for elem in catalog:
-        if Año_inicial >= elem["BeginDate"] and Año_final <= elem["EndDate"]:
-            artist["Nombre"] = elem["DisplayName"] 
-            artist["Año de inicio"] = elem["BeginDate"]
-            artist["Año final"] = elem["EndDate"]
-            artist["Nacionalidad"] = elem["Nationality"]
-            artist["Genero"] = elem["Gender"]
-            suma += 1
-    total = str("Total de artistas", suma)
-    return (artist, total)
+    authors = lt.subList(catalog["Artists"], 1, lt.size(catalog["Artists"]))
+    authors = sa.sort(authors, comparteYear)
+    authorsRange = lt.newList()
+    for i in range(1, lt.size(authors)+1):
+        author = lt.getElement(authors, i)
+        if int(author["BeginDate"]) >= Año_inicial and int(author["BeginDate"]) <= Año_final:
+            lt.addLast(authorsRange, author)
+    output = "\n\n------------------Req No. 1 Inputs------------------\nArtists born between {} and {}\n\n------------------Req No. 1 Answer------------------\nThere are {} artits born between {} and {}\n\nThe first and last 3 artists in range are...\nConstituentID\tDisplatName\tBeginDate\tNationality\tGender\tArtistBio\tWikiQID\tULAN\n{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\n{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}"
+    output = output.format(Año_inicial, Año_final, lt.size(authorsRange), Año_inicial, Año_final,
+            lt.getElement(authorsRange,1)["ConstituentID"], lt.getElement(authorsRange,1)["DisplayName"], lt.getElement(authorsRange,1)["BeginDate"], lt.getElement(authorsRange,1)["Nationality"], lt.getElement(authorsRange,1)["Gender"], lt.getElement(authorsRange,1)["ArtistBio"], lt.getElement(authorsRange,1)["Wiki QID"], lt.getElement(authorsRange,1)["ULAN"],
+            lt.getElement(authorsRange,2)["ConstituentID"], lt.getElement(authorsRange,2)["DisplayName"], lt.getElement(authorsRange,2)["BeginDate"], lt.getElement(authorsRange,2)["Nationality"], lt.getElement(authorsRange,2)["Gender"], lt.getElement(authorsRange,2)["ArtistBio"], lt.getElement(authorsRange,2)["Wiki QID"], lt.getElement(authorsRange,2)["ULAN"],
+            lt.getElement(authorsRange,3)["ConstituentID"], lt.getElement(authorsRange,3)["DisplayName"], lt.getElement(authorsRange,3)["BeginDate"], lt.getElement(authorsRange,3)["Nationality"], lt.getElement(authorsRange,3)["Gender"], lt.getElement(authorsRange,3)["ArtistBio"], lt.getElement(authorsRange,3)["Wiki QID"], lt.getElement(authorsRange,3)["ULAN"],
+            lt.getElement(authorsRange,lt.size(authorsRange)-2)["ConstituentID"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["DisplayName"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["BeginDate"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["Nationality"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["Gender"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["ArtistBio"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["Wiki QID"], lt.getElement(authorsRange,lt.size(authorsRange)-2)["ULAN"], 
+            lt.getElement(authorsRange,lt.size(authorsRange)-1)["ConstituentID"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["DisplayName"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["BeginDate"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["Nationality"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["Gender"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["ArtistBio"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["Wiki QID"], lt.getElement(authorsRange,lt.size(authorsRange)-1)["ULAN"],
+            lt.getElement(authorsRange,lt.size(authorsRange))["ConstituentID"], lt.getElement(authorsRange,lt.size(authorsRange))["DisplayName"], lt.getElement(authorsRange,lt.size(authorsRange))["BeginDate"], lt.getElement(authorsRange,lt.size(authorsRange))["Nationality"], lt.getElement(authorsRange,lt.size(authorsRange))["Gender"], lt.getElement(authorsRange,lt.size(authorsRange))["ArtistBio"], lt.getElement(authorsRange,lt.size(authorsRange))["Wiki QID"], lt.getElement(authorsRange,lt.size(authorsRange))["ULAN"])
+
+    return output
 
 def requ2(catalog, Fecha_inicial, Fecha_final):
-    adquisi={}
-    suma = 0
-    catalog["ArtWorks"]["DateAcquired"]= str(catalog["ArtWorks"]["DateAcquired"])
-    for elem in catalog["ArtWorks"]:
-        if elem["DateAcquired"] >= Fecha_inicial and elem["DateAcquired"] <= Fecha_final:
-            adquisi["Titulo"] = elem["Title"]
-            adquisi["Fecha"] = elem["Date"]
-            adquisi["Medio"] = elem["Classification"]
-            adquisi["Dimensiones"] = elem["Dimensions"]
-            if elem["CreditLine"] == "Purchase":
-                suma += 1
-    adquisi["Total"] = suma
-    return adquisi
+    artworks = lt.subList(catalog["ArtWorks"], 1, lt.size(catalog["ArtWorks"]))
+    artworksOut = lt.newList()
+    for i in range(1, lt.size(artworks)+1):
+        if len(lt.getElement(artworks, i)["DateAcquired"]) != 0:
+            lt.addLast(artworksOut, lt.getElement(artworks, i))
+    artworks = sa.sort(artworksOut, compareDate)
+    artworksRange = lt.newList()
+    Fecha_inicial = convertirFecha(Fecha_inicial)
+    Fecha_final = convertirFecha(Fecha_final)
+    for i in range(1, lt.size(artworks)+1):
+        if len(lt.getElement(artworks, i)["DateAcquired"]) != 0 :
+            fecha = convertirFecha(lt.getElement(artworks, i)["DateAcquired"])
+            if fecha >= Fecha_inicial and fecha <= Fecha_final:
+                lt.addLast(artworksRange, lt.getElement(artworks, i))
 
-#def requ3(catalog, Artista):
-   # Artist = {}
-   # sumaObras = 0
-   # sumaTecnicas = 0
-   # for elem in catalog["ArtWorks"]:
-        
+    return artworksRange
+
+def requ3(catalog, Nombre_Artista):
+    totalobras = 0
+    totaltecnicas = 0
+    listaobras = lt.newList()
+    obras = lt.subList(catalog["ArtWorks"], 1, lt.size(catalog["ArtWorks"]))
+    artista = lt.subList(catalog["Artists"]), 1, lt.size(catalog["Artists"])
+    artista = sa.sort(artista, comparateConstituteID)
+    obras = sa.sort(obras, comparateConstituteID)
+    final = lt.newList()
+    for i in range(1, lt.size(artista)+1):
+        if lt.isPresent(Nombre_Artista) > 0:
+            Id = lt.getElement(artista["ConstituentID"])
+            for j in range(1, lt.size(obras)+1):
+                obra = lt.getElement(obras["ConstituentID"], j)
+                if obra == Id:
+                    lt.addLast(final, obras)
+                    totalobras += 1
+                    totaltecnicas += 1
+    return final
+
+#def requ4(catalog, obra_museo):
+
+
 
 # def reque4(catalog, )
