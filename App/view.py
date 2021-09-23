@@ -25,7 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
-
+import time
 
 """
 La vista se encarga de la interacción con el usuario
@@ -41,6 +41,7 @@ def printMenu():
     print("3- Req.2 listar cronológicamente las adquisiciones")
     print("4- Req.3 listar cronológicamente las adquisiciones")
     print("5- Req.4 listar cronológicamente las adquisiciones")
+    print("6- Req.4 listar cronológicamente las adquisiciones")
 
 
 
@@ -76,24 +77,43 @@ while True:
     elif int(inputs[0]) == 2:
         Año_inicial = int(input("Año Inicial(YYYY)" ))
         Año_final = int(input("Año Final(YYYY)" ))
+        
         Año = controller.req1(catalog, Año_inicial, Año_final)
+        
+
         print(Año)
+        print(elapsed_time_mseg)
+        
 
     elif int(inputs[0]) == 3:
         Fecha_inicial = str(input("Fecha inicial (AAAA-MM-DD): "))
         Fecha_final = str(input("Fecha final (AAAA-MM-DD):"))
         fecha = controller.req2(catalog, Fecha_inicial, Fecha_final)
         print(fecha)
+        print(elapsed_time_mseg)
 
     elif int(inputs[0]) == 4:
         Artista_Nombre = str(input("Nombre de artista: "))
+        
         info = controller.req3(catalog, Artista_Nombre)
+        
+        
         print(info)
+        
     
     elif int(inputs[0]) == 5:
         Obra_Museo = str(input("Obra del museo: "))
         info = controller.req4(catalog, Obra_Museo)
         print(info)
+    
+    elif int(inputs[0]) == 6:
+        Dept_Museo = str(input("Departamento del museo: "))
+        start_time = time.process_time()
+        Dept = controller.req5(catalog, Dept_Museo)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print(Dept)
+        print(elapsed_time_mseg)
 
     else:
         sys.exit(0)

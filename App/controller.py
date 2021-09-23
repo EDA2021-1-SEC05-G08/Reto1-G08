@@ -74,3 +74,7 @@ def req3 (catalog, Artista_Nombre):
 def req4 (catalog, Obra_Museo):
     info_Museo = model.requ4(catalog, Obra_Museo)
     return info_Museo
+
+def req5 (catalog, Dept_Museo):
+    Dept_Museo = model.requ5(catalog, Dept_Museo)
+    return Dept_Museo
