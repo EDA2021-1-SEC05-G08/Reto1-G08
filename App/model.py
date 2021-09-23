@@ -150,6 +150,9 @@ def compareDate(artwork1, artwork2):
 def comparateConstituteID(constitudeID1, constitudeID2):
     return(constitudeID1["ConstituentID"] < constitudeID2["ConstituentID"])
 
+def comparteYear_artwork(author1, author2):
+    return (author1["Date"] < author2["Date"])
+    
 # Funciones de consulta
 def requ1(catalog, Año_inicial, Año_final):
     authors = lt.subList(catalog["Artists"], 1, lt.size(catalog["Artists"]))
